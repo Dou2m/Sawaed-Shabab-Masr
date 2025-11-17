@@ -1,4 +1,4 @@
-name: Build and Deploy React App
+name: Deploy Vite React App to GitHub Pages
 
 on:
   push:
@@ -11,7 +11,7 @@ permissions:
   id-token: write
 
 jobs:
-  build:
+  build_and_deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,17 +26,13 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build project
+      - name: Build Vite project
         run: npm run build
 
-      - name: Upload build artifact
+      - name: Upload dist folder
         uses: actions/upload-pages-artifact@v2
         with:
-          path: ./dist   # لو الناتج build غيّرها لـ build/
+          path: ./dist
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
